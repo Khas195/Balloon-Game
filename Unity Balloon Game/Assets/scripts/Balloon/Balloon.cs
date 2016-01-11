@@ -3,6 +3,16 @@ using System.Collections;
 public class Balloon : MonoBehaviour {
 
     public enum Type { BLUE, YELLOW, PINK, GREEN, BLACK };
+    [SerializeField]
+    AudioClip pickUp;
+    public AudioClip PickUp { get { return pickUp; } }
+    [SerializeField]
+    AudioClip putDown;
+    public AudioClip PutDown { get { return putDown; } }
+    [SerializeField]
+    AudioClip pop;
+    public AudioClip Pop { get { return pop; } }
+
 
      Type balloonType;
     public  Type BalloonType 
@@ -68,8 +78,12 @@ public class Balloon : MonoBehaviour {
     public IEnumerator Explode()
     {
         anim.SetTrigger("explode");
+        AudioSource.PlayClipAtPoint(pop, this.transform.position);
+        
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        this.gameObject.SetActive(false);
+        BalloonPoolManager.Instance.RequestPoolWithBalloonType(this.balloonType).ReturnBalloonOfType(this.gameObject);
+        this.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        this.transform.localScale = Vector3.one;
     }
     void OnCollider2D()
     {

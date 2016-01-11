@@ -7,7 +7,7 @@ using Assets.Core.StateStack;
 class DefaultController : IBalloonController
 {
     StateStack balloonStates;
-
+    Balloon balloon;
     BalloonState normal;
     BalloonState pickedUp;
     BalloonState travelClosetLane;
@@ -18,17 +18,19 @@ class DefaultController : IBalloonController
         pickedUp = new BalloonPickedUp(balloon);
         travelClosetLane = new BalloonTravelToClosestLane(balloon);
         balloonStates = new StateStack();
-
+        this.balloon = balloon;
         this.balloonStates.Push(normal);
     }
     public void OnClick()
     {
+        AudioSource.PlayClipAtPoint(this.balloon.PickUp, this.balloon.transform.position);
         balloonStates.Push(this.pickedUp);
     }
 
     public void OnRelease()
     {
         balloonStates.Pop();
+        AudioSource.PlayClipAtPoint(this.balloon.PutDown, this.balloon.transform.position);
         balloonStates.Push(this.travelClosetLane);
     }
 

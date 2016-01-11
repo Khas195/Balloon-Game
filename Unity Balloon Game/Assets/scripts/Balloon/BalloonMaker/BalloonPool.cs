@@ -25,20 +25,21 @@ public class BalloonPool
     }
     public GameObject RequestBalloonOfType(){
         GameObject requestedBalloon = null;
+       
         if (availablePool.Count <= 0)
         {
             requestedBalloon = factory.CreateBalloon(type);
         }
         else
         {
-            Debug.Log("Use From pool");
             requestedBalloon = availablePool.Pop();
         }
         usedPool.Add(requestedBalloon);
         return requestedBalloon;
     }
     public void ReturnBalloonOfType(GameObject balloonObject)
-    {
+	{
+        
         Balloon balloon = balloonObject.GetComponent<Balloon>();
         if (balloon != null && balloon.BalloonType == type)
         {
@@ -47,6 +48,7 @@ public class BalloonPool
                 usedPool.Remove(balloonObject);
             }
             this.availablePool.Push(balloonObject);
+			balloonObject.SetActive(false);
         }
         else
         {

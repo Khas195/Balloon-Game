@@ -21,31 +21,44 @@ public class BalloonFactory : MonoBehaviour
     public GameObject CreateBalloon(Balloon.Type type)
     {
         GameObject product = null;
+        Balloon balloon;
         switch (type)
         {
             case Balloon.Type.BLACK:
                 product = ManufactureBasicElements(blackBaloon);
-                product.GetComponent<Balloon>().SetBalloonController(new BlackBalloonController());
+                balloon = product.GetComponent<Balloon>();
+                balloon.BalloonType = Balloon.Type.BLACK;
+                balloon.SetBalloonController(new BlackBalloonController());
                 break;
             case Balloon.Type.BLUE:
                 product = ManufactureBasicElements(blueBaloon);
-                product.GetComponent<Balloon>().SetBalloonController(new DefaultController());
+                balloon = product.GetComponent<Balloon>();
+                balloon.BalloonType = Balloon.Type.BLUE;
+                balloon.SetBalloonController(new DefaultController());
                 break;
             case Balloon.Type.GREEN:
                 product = ManufactureBasicElements(greenBaloon);
-                product.GetComponent<Balloon>().SetBalloonController(new DefaultController());
+                balloon = product.GetComponent<Balloon>();
+                balloon.BalloonType = Balloon.Type.GREEN;
+                balloon.SetBalloonController(new DefaultController());
                 break;
             case Balloon.Type.PINK:
                 product = ManufactureBasicElements(pinkBaloon);
-                product.GetComponent<Balloon>().SetBalloonController(new DefaultController());
+                balloon = product.GetComponent<Balloon>();
+                balloon.BalloonType = Balloon.Type.PINK;
+                balloon.SetBalloonController(new DefaultController());
                 break;
             case Balloon.Type.YELLOW:
                 product = ManufactureBasicElements(yellowBalloon);
-                product.GetComponent<Balloon>().SetBalloonController(new DefaultController());
+                balloon = product.GetComponent<Balloon>();
+                balloon.BalloonType = Balloon.Type.YELLOW;
+                balloon.SetBalloonController(new DefaultController());
                 break;
             default:
                 product = ManufactureBasicElements(yellowBalloon);
-                product.GetComponent<Balloon>().SetBalloonController(new DefaultController());
+                balloon = product.GetComponent<Balloon>();
+                balloon.BalloonType = Balloon.Type.YELLOW;
+                balloon.SetBalloonController(new DefaultController());
                 break;
         }
         return product;
@@ -56,6 +69,7 @@ public class BalloonFactory : MonoBehaviour
         GameObject product;
         product = Instantiate(basicPrototype);
         product.GetComponent<SpriteRenderer>().sprite = sprite;
+
         return product;
     }
 }
